@@ -2,6 +2,7 @@ from rest_framework import serializers
 from .models import Movie, Rating
 from django.contrib.auth import authenticate
 from django.utils.translation import ugettext_lazy as _
+import json
 
 class RatingSerializer(serializers.ModelSerializer):
   class Meta:
@@ -14,8 +15,6 @@ class RatingSerializer(serializers.ModelSerializer):
 
     
 class MovieSerializer(serializers.ModelSerializer):
-  
-  ratings = RatingSerializer(many=True)
 
   class Meta:
     model = Movie
@@ -27,12 +26,19 @@ class MovieSerializer(serializers.ModelSerializer):
       'plot',
       'ratings',
     ]
+
+  def __init__(self, *args, **kwargs):
+    super(MovieSerializer, self).__init__(*args, **kwargs)
+    try:
+      if self.context['request'].method in ['PUT', 'PATCH']:
+        self.fields['ratings'] = serializers.PrimaryKeyRelatedField(
+          many=True,
+          queryset=Rating.objects.all(), 
+          required=False
+        )
+      else:
+        self.fields['ratings'] = RatingSerializer(many=True, required=False);
+    except KeyError:
+      pass
+
   
-  def create(self, validated_data):
-    rating_data = validated_data.pop('ratings')
-    movie = Movie.objects.create(**validated_data)
-    if(len(rating_data)):
-      Rating.objects.create(movie=movie, *rating_data)
-    return movie
-
-
