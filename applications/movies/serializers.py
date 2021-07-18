@@ -27,5 +27,12 @@ class MovieSerializer(serializers.ModelSerializer):
       'plot',
       'ratings',
     ]
+  
+  def create(self, validated_data):
+    rating_data = validated_data.pop('ratings')
+    movie = Movie.objects.create(**validated_data)
+    if(len(rating_data)):
+      Rating.objects.create(movie=movie, *rating_data)
+    return movie
 
 

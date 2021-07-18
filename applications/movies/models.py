@@ -13,7 +13,7 @@ class Rating(models.Model):
 class Movie(models.Model):
 
     title = models.CharField(max_length=150)
-    release_date = models.DateTimeField()
+    release_date = models.DateField()
     genre = models.CharField(max_length=20)
     plot = models.TextField()
     ratings = models.ManyToManyField(Rating, blank=True)
