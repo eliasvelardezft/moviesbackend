@@ -21,46 +21,14 @@ class MoviesTestCase(APITestCase):
         "release_date": "2017-06-14",
         "genre": "Thriller",
         "plot": "unos periodistas etc",
-        "ratings": [
-            {
-            "id": 1,
-            "rating": 10,
-            "comment": "good"
-            }
-        ]
+        "ratings": []
     }
     data = {
       "title": "Spotlight",
       "release_date": "2017-06-14",
       "genre": "Thriller",
-      "plot": "unos periodistas etc",
-      "ratings": [
-          {
-              "rating": 10,
-              "comment": "good"
-          }
-      ]
+      "plot": "unos periodistas etc"
     }
     response = self.client.post("/movies/movies/", data, format="json")
-    print(response.data)
-    # assert response.data == expectedResponse
+    assert response.data == expectedResponse
 
-{
-    "id": 34,
-    "title": "Spotligdeadaeaedht",
-    "release_date": "2017-06-14",
-    "genre": "Thriller",
-    "plot": "unos periodistas etc",
-      "ratings": [
-          {
-              "id": 101,
-              "rating": 10,
-              "comment": "very good"
-          },
-          {
-              "id": 100,
-              "rating": 9,
-              "comment": "very goooooood"  
-          }
-      ]
-}

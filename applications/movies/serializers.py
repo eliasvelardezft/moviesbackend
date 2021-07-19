@@ -3,6 +3,8 @@ from .models import Movie, Rating
 from django.contrib.auth import authenticate
 from django.utils.translation import ugettext_lazy as _
 import json
+from drf_writable_nested.serializers import WritableNestedModelSerializer
+
 
 class RatingSerializer(serializers.ModelSerializer):
   class Meta:
@@ -14,7 +16,7 @@ class RatingSerializer(serializers.ModelSerializer):
     ]
 
     
-class MovieSerializer(serializers.ModelSerializer):
+class MovieSerializer(WritableNestedModelSerializer):
 
   class Meta:
     model = Movie
@@ -30,7 +32,7 @@ class MovieSerializer(serializers.ModelSerializer):
   def __init__(self, *args, **kwargs):
     super(MovieSerializer, self).__init__(*args, **kwargs)
     try:
-      if self.context['request'].method in ['PUT', 'PATCH']:
+      if self.context['request'].method in ['PUT', 'POST']:
         self.fields['ratings'] = serializers.PrimaryKeyRelatedField(
           many=True,
           queryset=Rating.objects.all(), 
@@ -40,5 +42,18 @@ class MovieSerializer(serializers.ModelSerializer):
         self.fields['ratings'] = RatingSerializer(many=True, required=False);
     except KeyError:
       pass
+  
 
+{
+    "ratings": [
+        {
+            "rating": 10,
+            "comment": "muy bue"
+        },
+        {
+            "rating": 9,
+            "comment": "casi perfecto"
+        }
+    ]
+}
   
