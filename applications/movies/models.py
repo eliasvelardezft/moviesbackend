@@ -25,18 +25,22 @@ class Movie(models.Model):
     def _get_average_rating(self):
         sum = 0
         ratings = self.ratings.all()
-        for r in ratings:
+        if(self.ratings.count() == 0):
+            return 0.0
+        
+        for r in ratings:                
             sum += r.rating
-        if(len(ratings)):
-            return sum/len(ratings)
-        return 0
+
+        return sum/len(ratings)
+
         
     average = property(_get_average_rating)
 
     objects = MovieManager()
 
     def __str__(self):
-        return f'{self.title} - {self.genre}'
+        return f'{self.average}'
+        # return f'{self.title} - {self.genre}'
 
 
 
