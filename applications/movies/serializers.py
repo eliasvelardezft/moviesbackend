@@ -13,6 +13,7 @@ class RatingSerializer(serializers.ModelSerializer):
       'id',
       'rating',
       'comment',
+      'user'
     ]
 
     
@@ -31,6 +32,7 @@ class MovieSerializer(WritableNestedModelSerializer):
       'average_rating',
       'plot',
       'ratings',
+      'user'
     ]
 
   def __init__(self, *args, **kwargs):
