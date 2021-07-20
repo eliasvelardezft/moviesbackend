@@ -1,3 +1,4 @@
+from django.db.models.query import QuerySet
 from applications.movies.apps import MoviesConfig
 from rest_framework.response import Response
 from rest_framework import viewsets
@@ -16,25 +17,19 @@ class MovieViewSet(viewsets.ModelViewSet):
   authentication_classes = [TokenAuthentication]
   permission_classes = [AllowAny]
 
-  def create(self, request, *args, **kwargs):
-    serializer = self.get_serializer(data=request.data)
-    serializer.is_valid(raise_exception=True)
-    self.perform_create(serializer)
-    headers = self.get_success_headers(serializer.data)
-    return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+  def get_queryset(self):
+      qs = {
+        'ascDate': Movie.objects.ordered_by_date('asc'),
+        'descDate': Movie.objects.ordered_by_date('desc'),
+        'ascRating': Movie.objects.ordered_by_avg_rating('asc'),
+        'descRating': Movie.objects.ordered_by_avg_rating('desc')
+      }
+      queryset = Movie.objects.all()
+      filter = self.request.META.get('HTTP_SEARCHSORT')
+      if filter in qs.keys():
+        queryset = qs[f'{filter}']
+      return queryset
 
-
-  @action(methods=['GET'], detail=False)
-  def get_movies_ascending_date(self, *args, **kwargs):
-    queryset = Movie.objects.ordered_by_date_asc();
-    serializer = MovieSerializer(queryset, many=True);
-    return Response(serializer.data)
-  
-  @action(methods=['GET'], detail=False)
-  def get_movies_descending_date(self, *args, **kwargs):
-    queryset = Movie.objects.ordered_by_date_desc();
-    serializer = MovieSerializer(queryset, many=True);
-    return Response(serializer.data)
 
 
 class RatingViewSet(viewsets.ModelViewSet):

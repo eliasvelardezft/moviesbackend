@@ -18,6 +18,9 @@ class RatingSerializer(serializers.ModelSerializer):
     
 class MovieSerializer(WritableNestedModelSerializer):
 
+  average_rating = serializers.ReadOnlyField(source='average')
+
+
   class Meta:
     model = Movie
     fields = [
@@ -25,6 +28,7 @@ class MovieSerializer(WritableNestedModelSerializer):
       'title',
       'release_date',
       'genre',
+      'average_rating',
       'plot',
       'ratings',
     ]
@@ -32,7 +36,7 @@ class MovieSerializer(WritableNestedModelSerializer):
   def __init__(self, *args, **kwargs):
     super(MovieSerializer, self).__init__(*args, **kwargs)
     try:
-      if self.context['request'].method in ['PUT', 'POST']:
+      if self.context['request'].method in ['PUT']:
         self.fields['ratings'] = serializers.PrimaryKeyRelatedField(
           many=True,
           queryset=Rating.objects.all(), 

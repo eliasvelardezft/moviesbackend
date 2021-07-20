@@ -67,7 +67,7 @@ MIDDLEWARE = [
 
 # CORS para q el frontend pueda hacer requests
 CORS_ALLOW_METHODS = list(default_methods)
-CORS_ALLOW_HEADERS = list(default_headers)
+CORS_ALLOW_HEADERS = list(default_headers) + list(['searchsort'])
 CORS_ALLOW_ALL_ORIGINS = True
 
 ROOT_URLCONF = 'nicamoviesbackend.urls'

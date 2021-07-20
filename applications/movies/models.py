@@ -18,9 +18,22 @@ class Movie(models.Model):
     plot = models.TextField()
     ratings = models.ManyToManyField(Rating, blank=True)
 
+    def _get_average_rating(self):
+        sum = 0
+        ratings = self.ratings.all()
+        for r in ratings:
+            sum += r.rating
+        if(len(ratings)):
+            return sum/len(ratings)
+        return 0
+        
+    average = property(_get_average_rating)
+
     objects = MovieManager()
 
     def __str__(self):
         return f'{self.title} - {self.genre}'
+
+
 
     
