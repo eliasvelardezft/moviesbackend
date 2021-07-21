@@ -4,6 +4,12 @@ from corsheaders.defaults import default_headers, default_methods
 from unipath import Path
 import os
 
+from decouple import config
+# Initialise environment variables
+# import environ
+# env = environ.Env()
+# environ.Env.read_env()
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).ancestor(3)
 
@@ -12,18 +18,7 @@ BASE_DIR = Path(__file__).ancestor(3)
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-with open('secret.json') as f:
-  secret = json.loads(f.read())
-
-def get_secret(secret_name, secrets=secret):
-  try:
-    return secrets[secret_name]
-  except: 
-    msg = f'la variable {secret_name} no existe'
-    raise ImproperlyConfigured(msg)
-
-SECRET_KEY = get_secret('SECRET_KEY')
-
+SECRET_KEY = config('SECRET_KEY')
 
 # Application definition
 DJANGO_APPS = [

@@ -1,0 +1,1 @@
+web: gunicorn nicamoviesbackend.wsgi --log-file -

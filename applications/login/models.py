@@ -2,12 +2,12 @@ from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from .managers import UserManager
 
-
 class User(AbstractBaseUser, PermissionsMixin):
 
   first_name = models.CharField(max_length=50)
   last_name = models.CharField(max_length=50)
   username = models.CharField('username', max_length=50, primary_key=True)
+  movies_watchlist = models.ManyToManyField('movies.Movie', blank=True, related_name='watchlist')
 
 
   # Estos campos son los relacionados con que es un Usuario de django

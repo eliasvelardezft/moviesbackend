@@ -12,7 +12,7 @@ class UserViewSet(viewsets.ModelViewSet):
   serializer_class = UserSerializer
   queryset = User.objects.all()
   authentication_classes = [TokenAuthentication]
-  permission_classes = [AllowAny]
+  permission_classes = [IsAuthenticated]
 
   def get_serializer_class(self):
     if self.action in ['login']:

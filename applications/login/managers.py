@@ -16,15 +16,17 @@ class UserManager(BaseUserManager, models.Manager):
     else:
       return False
 
-  def _create_user(self, first_name, last_name, username, password, is_staff, is_superuser, **extra_fields):
+  def _create_user(self, first_name, last_name, username, movies_watchlist, password, is_staff, is_superuser, **extra_fields):
     user = self.model(
       first_name = f'{first_name[0].upper()}{first_name[1:]}',
       last_name = f'{last_name[0].upper()}{last_name[1:]}',
       username = username,
       is_staff = is_staff,
       is_superuser = is_superuser,
+
       **extra_fields
     )
+    user.movies_watchlist.set(movies_watchlist)
     user.set_password(password)
 
     if self.username_exists(user.username):
@@ -34,11 +36,11 @@ class UserManager(BaseUserManager, models.Manager):
       Token.objects.get_or_create(user=user)
       return user
   
-  def create_user(self, first_name, last_name, username, password=None, **extra_fields):
-    return self._create_user(first_name, last_name, username, password, False, False, **extra_fields)
+  def create_user(self, first_name, last_name, username, movies_watchlist=[], password=None, **extra_fields):
+    return self._create_user(first_name, last_name, username, movies_watchlist, password, False, False, **extra_fields)
 
-  def create_superuser(self, first_name, last_name, username, password=None, **extra_fields):
-    return self._create_user(first_name, last_name, username, password, True, True, **extra_fields)  
+  def create_superuser(self, first_name, last_name, username, movies_watchlist=[], password=None, **extra_fields):
+    return self._create_user(first_name, last_name, username, movies_watchlist, password, True, True, **extra_fields)  
   
 
 

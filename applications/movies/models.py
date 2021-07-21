@@ -39,8 +39,7 @@ class Movie(models.Model):
     objects = MovieManager()
 
     def __str__(self):
-        return f'{self.average}'
-        # return f'{self.title} - {self.genre}'
+        return f'{self.title} - {self.genre}'
 
 
 

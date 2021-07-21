@@ -15,7 +15,7 @@ class MovieViewSet(viewsets.ModelViewSet):
   serializer_class = MovieSerializer
   queryset = Movie.objects.all()
   authentication_classes = [TokenAuthentication]
-  permission_classes = [AllowAny]
+  permission_classes = [IsAuthenticated]
 
   def get_queryset(self):
       qs = {
