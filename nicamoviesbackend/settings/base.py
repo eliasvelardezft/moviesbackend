@@ -56,11 +56,10 @@ MIDDLEWARE = [
 CORS_ALLOW_METHODS = list(default_methods)
 CORS_ALLOW_HEADERS = list(default_headers) + list(['searchsort'])
 CORS_ALLOWED_ORIGINS = [
-    'http://localhost:8080',
-    'http://127.0.0.1:8080',
+    # 'http://localhost:8080',
+    # 'http://127.0.0.1:8080',
+    'https://nicamovies-app.web.app'
 ]
-
-# CORS_ALLOW_ALL_ORIGINS = True
 
 ROOT_URLCONF = 'nicamoviesbackend.urls'
 
