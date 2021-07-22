@@ -58,7 +58,7 @@ CORS_ALLOW_HEADERS = list(default_headers) + list(['searchsort'])
 CORS_ALLOWED_ORIGINS = [
     # 'http://localhost:8080',
     # 'http://127.0.0.1:8080',
-    'https://nicamovies-app.web.app'
+    'https://nicamoviesapp.web.app'
 ]
 
 ROOT_URLCONF = 'nicamoviesbackend.urls'
