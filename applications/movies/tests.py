@@ -1,19 +1,4 @@
-import json
-from django.urls import reverse
-from django.test import TestCase
-
-from rest_framework.authtoken.models import Token
-from rest_framework.test import APITestCase, force_authenticate
-from rest_framework import status
-
-from .models import Movie, Rating
-
-from rest_framework.test import RequestsClient
-
-
-
-# Create your tests here.
-
+from rest_framework.test import APITestCase
 
 class MoviesTestCase(APITestCase):
     
@@ -45,11 +30,11 @@ class MoviesTestCase(APITestCase):
                 "plot": "unos periodistas etc",
                 "ratings": [
                     {
-                        "rating": 10,
+                        "rating": 5,
                         "comment": "bueno",
                     },
                     {
-                        "rating": 10,
+                        "rating": 5,
                         "comment": "good"
                     }
                 ]
@@ -61,11 +46,11 @@ class MoviesTestCase(APITestCase):
                 "plot": "matiu va al espacio",
                 "ratings": [
                     {
-                        "rating": 8,
+                        "rating": 3,
                         "comment": "great",
                     },
                     {
-                        "rating": 10,
+                        "rating": 5,
                         "comment": "excelent"
                     }
                 ]

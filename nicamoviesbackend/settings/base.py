@@ -1,15 +1,7 @@
-from django.core.exceptions import ImproperlyConfigured
-import json
 from corsheaders.defaults import default_headers, default_methods 
 from unipath import Path
-import os
-
 from decouple import config
-# Initialise environment variables
-# import environ
-# env = environ.Env()
-# environ.Env.read_env()
-
+import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).ancestor(3)
 
@@ -63,7 +55,10 @@ MIDDLEWARE = [
 # CORS para q el frontend pueda hacer requests
 CORS_ALLOW_METHODS = list(default_methods)
 CORS_ALLOW_HEADERS = list(default_headers) + list(['searchsort'])
-CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:8000',
+    'http://127.0.0.1:8000',
+]
 
 ROOT_URLCONF = 'nicamoviesbackend.urls'
 

@@ -31,7 +31,7 @@ class Movie(models.Model):
         for r in ratings:                
             sum += r.rating
 
-        return sum/len(ratings)
+        return round(sum/len(ratings), 1)
 
         
     average = property(_get_average_rating)
