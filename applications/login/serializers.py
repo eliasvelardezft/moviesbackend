@@ -44,12 +44,14 @@ class LoginSerializer(serializers.Serializer):
   def validate(self, data):
     username = data.get('username')
     password = data.get('password')
+
     if username and password:
       user = authenticate(username=username, password=password)
       if not user:
         msg = _('Incorrect credentials')
         raise serializers.ValidationError(msg, code='authorization')
     else:
+
       msg = _('Incomplete credentials')
       raise serializers.ValidationError(msg, code='authorization')
 
