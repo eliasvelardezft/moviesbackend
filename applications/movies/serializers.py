@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from rest_framework.pagination import PageNumberPagination
 from .models import Movie, Rating
 from drf_writable_nested.serializers import WritableNestedModelSerializer
 
@@ -32,6 +33,9 @@ class MovieSerializer(WritableNestedModelSerializer):
       'user'
     ]
 
-  
+class MoviePagination(PageNumberPagination):
+  page_size = 5
+  page_size_query_param = 'page_size'
+  max_page_size = 10
 
   

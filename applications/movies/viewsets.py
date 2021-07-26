@@ -6,16 +6,16 @@ from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.decorators import action
 from rest_framework import status
-
 from rest_framework.authtoken.models import Token
 from .models import Movie, Rating
-from .serializers import MovieSerializer, RatingSerializer
+from .serializers import MovieSerializer, RatingSerializer, MoviePagination
 
 class MovieViewSet(viewsets.ModelViewSet):
   serializer_class = MovieSerializer
   queryset = Movie.objects.all()
   authentication_classes = [TokenAuthentication]
   permission_classes = [IsAuthenticated]
+  pagination_class = MoviePagination
 
   def get_queryset(self):
       qs = {
